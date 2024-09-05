@@ -1,6 +1,5 @@
 ﻿namespace UnityAnalytics.Back.Core.Domain;
 
-public class GamePlayer
+public class GamePlayer : EntityBase
 {
-    
 }

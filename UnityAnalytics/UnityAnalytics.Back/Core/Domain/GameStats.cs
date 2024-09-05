@@ -1,11 +1,10 @@
 ﻿namespace UnityAnalytics.Back.Core.Domain;
 
-public class GameStats 
+public class GameStats : EntityBase
 {
-    public string Region { get; set; }
-    public TimeSpan PlayTime { get; set; }
-    public int GamePlayerId { get; set; }
-    public GamePlayer? Player { get; set; }
-    public int GameId { get; set; }
+    public int TotalPlays { get; set; }
+    public int UniqueUsers { get; set; }
+    public double AveragePlayTime { get; set; }
+    public Guid GameId { get; set; }
     public Game Game { get; set; }
 }

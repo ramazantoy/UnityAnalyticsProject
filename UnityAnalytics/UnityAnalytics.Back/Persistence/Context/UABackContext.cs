@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using UnityAnalytics.Back.Core;
 using UnityAnalytics.Back.Core.Domain;
 using UnityAnalytics.Back.Persistence.Configurations;
 
@@ -20,8 +21,22 @@ public class UABackContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<AppUser>().HasData(new AppUser[]
+        {
+            new AppUser()
+            {
+                UserName ="leonbrave",
+                Password = "leonbrave",
+                AppRoleId = (int)AppRoleTypes.Admin,
+                Id = Guid.NewGuid(),
+                
+            }
+        });
+        modelBuilder.ApplyConfiguration(new AppRoleConfiguration());
         modelBuilder.ApplyConfiguration(new AppUserConfiguration());
+        modelBuilder.ApplyConfiguration(new CustomEventConfiguration());
         modelBuilder.ApplyConfiguration(new GameConfigurations());
+        modelBuilder.ApplyConfiguration(new GameStatsConfiguration());
     
         base.OnModelCreating(modelBuilder);
     }

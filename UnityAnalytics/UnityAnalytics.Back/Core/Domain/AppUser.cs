@@ -1,11 +1,13 @@
 ﻿namespace UnityAnalytics.Back.Core.Domain;
 
-public class AppUser
+public class AppUser : EntityBase
 {
-    public int UserId { get; set; }
     public string? UserName { get; set; }
     public string? Password { get; set; }
     public int AppRoleId { get; set; }
+
     public AppRole? AppRole { get; set; }
-    public DateTime CreatedAt { get; set; } = DateTime.Now;
+    public ICollection<Game> Games { get; set; }
+
+ 
 }
