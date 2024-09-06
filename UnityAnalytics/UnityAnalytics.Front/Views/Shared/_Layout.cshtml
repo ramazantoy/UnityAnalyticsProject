@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width"/>
+    <title>Project_5 Identity App</title>
+    <link href="/bootstrap/css/bootstrap-grid.min.css" rel="stylesheet"/>
+</head>
+<body>
+<header>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container">
+        @* <a class="navbar-brand" asp-action="Index" asp-controller="Home">Project_5</a> *@
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a href="#" class="nav-link active" aria-current="page">DummyPage</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link active" aria-current="page">DummyPage_2</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link active" aria-current="page">DummyPage_2</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    @* <form method="post" asp-action="SignOut" asp-controller="Home" class="form-inline"> *@
+                    @*     <button type="submit" class="btn btn-link nav-link ">Sign Out</button> *@
+                    @* </form> *@
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+</header>
+<section>
+    <div class="container mt-2">
+        @RenderBody()
+    </div>
+</section>
+<script src="~/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
