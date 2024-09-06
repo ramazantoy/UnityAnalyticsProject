@@ -5,6 +5,6 @@ namespace UnityAnalytics.Back.Core.Application.CQRS.Commands;
 
 public class CreateGameCommandRequest : IRequest<CreateGameResponseDto>
 {
-    public Guid UserId { get; set; }
+    public string UserName { get; set; }
     public string GameName { get; set; }
 }

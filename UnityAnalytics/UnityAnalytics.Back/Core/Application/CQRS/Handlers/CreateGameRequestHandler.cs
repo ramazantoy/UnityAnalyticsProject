@@ -19,7 +19,7 @@ public class CreateGameRequestHandler : IRequestHandler<CreateGameCommandRequest
 
     public async Task<CreateGameResponseDto> Handle(CreateGameCommandRequest request, CancellationToken cancellationToken)
     {
-        var user =await _userRepository.GetByFilter(x => x.Id == request.UserId);
+        var user =await _userRepository.GetByFilter(x => x.UserName == request.UserName);
         if (user == null)
         {
             return new CreateGameResponseDto()
@@ -41,7 +41,7 @@ public class CreateGameRequestHandler : IRequestHandler<CreateGameCommandRequest
         game = new Game()
         {
             Name = request.GameName,
-            UserId = request.UserId,
+            UserId = user.Id,
         };
         await _gameRepository.CreateAsync(game);
 
