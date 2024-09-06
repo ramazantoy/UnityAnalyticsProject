@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UnityAnalytics.Back.Persistence.Context;
 
@@ -11,9 +12,10 @@ using UnityAnalytics.Back.Persistence.Context;
 namespace UnityAnalytics.Back.Persistence.Migrations
 {
     [DbContext(typeof(UABackContext))]
-    partial class UABackContextModelSnapshot : ModelSnapshot
+    [Migration("20240906141927_Removed2")]
+    partial class Removed2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

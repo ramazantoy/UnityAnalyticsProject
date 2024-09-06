@@ -9,9 +9,9 @@ public class GameConfigurations : IEntityTypeConfiguration<Game>
     public void Configure(EntityTypeBuilder<Game> builder)
     {
         builder.HasKey(g => g.Id);
-        builder.Property(g => g.GameId).IsRequired();
+        //builder.Property(g => g.GameId).IsRequired();
         builder.Property(g => g.Name).IsRequired();
-        builder.Property(g => g.Description);
+        // builder.Property(g => g.Description);
         
 
         builder.HasMany(g => g.GameStats)

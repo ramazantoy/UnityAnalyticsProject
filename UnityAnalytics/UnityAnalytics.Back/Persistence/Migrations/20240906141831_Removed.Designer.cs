@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UnityAnalytics.Back.Persistence.Context;
 
@@ -11,9 +12,10 @@ using UnityAnalytics.Back.Persistence.Context;
 namespace UnityAnalytics.Back.Persistence.Migrations
 {
     [DbContext(typeof(UABackContext))]
-    partial class UABackContextModelSnapshot : ModelSnapshot
+    [Migration("20240906141831_Removed")]
+    partial class Removed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,9 +70,9 @@ namespace UnityAnalytics.Back.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("f30f8268-f62e-4008-8cab-3ba5ad0bc7d7"),
+                            Id = new Guid("cf209c0e-9d5d-48a1-8d2e-799f1245bdc2"),
                             AppRoleId = 1,
-                            CreatedAt = new DateTime(2024, 9, 6, 17, 19, 27, 775, DateTimeKind.Local).AddTicks(2726),
+                            CreatedAt = new DateTime(2024, 9, 6, 17, 18, 31, 738, DateTimeKind.Local).AddTicks(8830),
                             Password = "leonbrave",
                             UserName = "leonbrave"
                         });
@@ -114,6 +116,10 @@ namespace UnityAnalytics.Back.Persistence.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
