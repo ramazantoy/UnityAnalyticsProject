@@ -1,9 +1,11 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UnityAnalytics.Back.Core.Application.CQRS.Commands;
 
 namespace UnityAnalytics.Back.Controllers;
 
+[Authorize(Roles = "Admin,Member")]
 [Route("api/[controller]")]
 public class GameController : ControllerBase
 {
