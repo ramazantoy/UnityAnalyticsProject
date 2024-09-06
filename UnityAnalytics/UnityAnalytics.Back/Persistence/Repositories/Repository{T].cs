@@ -1,37 +1,49 @@
 ﻿using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 using UnityAnalytics.Back.Core.Application.Interfaces;
+using UnityAnalytics.Back.Persistence.Context;
 
 namespace UnityAnalytics.Back.Persistence.Repositories;
 
 public class Repository <T> :  IRepository<T> where T : class, new()
 {
-    public Task<List<T>> GetAllAsync()
+    private readonly UABackContext _context;
+
+    public Repository(UABackContext context)
     {
-        throw new NotImplementedException();
+        _context = context;
     }
 
-    public Task<T?> GetByIdAsync(object id)
+    public async Task<List<T>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        return await _context.Set<T>().AsNoTracking().ToListAsync();
     }
 
-    public Task<T?> GetByFilter(Expression<Func<T, bool>> filter)
+    public async Task<T?> GetByIdAsync(object id)
     {
-        throw new NotImplementedException();
+        return await _context.Set<T>().FindAsync(id);
     }
 
-    public Task CreateAsync(T entity)
+    public async Task<T?> GetByFilter(Expression<Func<T, bool>> filter)
     {
-        throw new NotImplementedException();
+        return await _context.Set<T>().AsNoTracking().SingleOrDefaultAsync(filter);
     }
 
-    public Task UpdateAsync(T entity)
+    public async Task CreateAsync(T entity)
     {
-        throw new NotImplementedException();
+        _context.Set<T>().Add(entity);
+        await _context.SaveChangesAsync();
     }
 
-    public Task RemoveAsync(T entity)
+    public async Task UpdateAsync(T entity)
     {
-        throw new NotImplementedException();
+        _context.Set<T>().Update(entity);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task RemoveAsync(T entity)
+    {
+        _context.Set<T>().Remove(entity);
+        await _context.SaveChangesAsync();
     }
 }

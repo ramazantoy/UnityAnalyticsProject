@@ -1,3 +1,5 @@
+using System.Reflection;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using UnityAnalytics.Back.Core.Application.Interfaces;
 using UnityAnalytics.Back.Persistence.Context;
@@ -14,6 +16,7 @@ builder.Services.AddDbContext<UABackContext>(opt =>
 });
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 
 var app = builder.Build();
 
