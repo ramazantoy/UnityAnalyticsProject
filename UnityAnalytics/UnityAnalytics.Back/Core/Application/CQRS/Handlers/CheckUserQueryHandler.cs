@@ -21,7 +21,7 @@ public class CheckUserQueryHandler : IRequestHandler<CheckUserQueryRequest, Chec
     public async Task<CheckUserResponseDto>  Handle(CheckUserQueryRequest request,CancellationToken token)
     {
         var dto = new CheckUserResponseDto();
-        var user = await _userRepository.GetByFilter(x => x.UserName == request.Username && x.Password == request.Password);
+        var user = await _userRepository.GetByFilter(x => x.UserName == request.UserName && x.Password == request.Password);
 
         if (user == null)
         {

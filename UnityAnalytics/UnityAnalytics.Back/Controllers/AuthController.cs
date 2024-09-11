@@ -7,7 +7,7 @@ using UnityAnalytics.Back.Infrastructure;
 namespace UnityAnalytics.Back.Controllers;
 
 [Route("api/[controller]")]
-
+[ApiController]
 public class AuthController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -27,6 +27,9 @@ public class AuthController : ControllerBase
     [HttpPost("[action]")]
     public async Task<IActionResult> Login(CheckUserQueryRequest request)
     {
+        Console.WriteLine("Request : "+request);
+        Console.WriteLine(request.UserName);
+        Console.WriteLine(request.Password);
         var dto = await _mediator.Send(request);
         if (dto.IsExist)
         {
