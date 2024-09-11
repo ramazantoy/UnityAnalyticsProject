@@ -1,8 +1,18 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using UnityAnalytics.Front.Models;
+using UnityAnalytics.Front.Validators.FluentValidator;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddFluentValidation(fv =>
+{
+    fv.RegisterValidatorsFromAssemblyContaining<UserSignInModelValidator>();
+    fv.DisableDataAnnotationsValidation = true;
+});
+
+builder.Services.AddTransient<IValidator<UserSignInModel>, UserSignInModelValidator>();
 
 builder.Services.AddHttpClient();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddCookie(JwtBearerDefaults.AuthenticationScheme,
@@ -16,8 +26,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddCo
         opt.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
         opt.Cookie.Name = "UnityAnalyticsProject";
     });
-var app = builder.Build();
 
+var app = builder.Build();
 
 app.UseStaticFiles();
 app.UseRouting();
