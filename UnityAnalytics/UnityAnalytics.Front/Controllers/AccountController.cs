@@ -88,7 +88,8 @@ public class AccountController : ControllerBase
             }
         }
 
-        ModelState.AddModelError("", $"Login failed with status code: {response.StatusCode}");
+        var errorMessage = await response.Content.ReadAsStringAsync();
+        ModelState.AddModelError("", $"An error occurred {errorMessage}");
         return View(model);
     }
 
