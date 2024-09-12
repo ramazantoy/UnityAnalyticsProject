@@ -20,22 +20,24 @@ public class AuthController : ControllerBase
     [HttpPost("[action]")]
     public async Task<IActionResult> Register(RegisterUserCommandRequest request)
     {
-        await _mediator.Send(request);
-        return Created("", request);
+       var response= await _mediator.Send(request);
+       if (response.IsSuccess)
+       {
+           return Created("", response);
+       }
+
+       return BadRequest(response.ErrorMessage);
     }
     
     [HttpPost("[action]")]
     public async Task<IActionResult> Login(CheckUserQueryRequest request)
     {
-        Console.WriteLine("Request : "+request);
-        Console.WriteLine(request.UserName);
-        Console.WriteLine(request.Password);
         var dto = await _mediator.Send(request);
         if (dto.IsExist)
         {
          return Created("", JwtTokenGenerator.GenerateToken(dto));
         }
 
-        return BadRequest("username or password is wrong");
+        return BadRequest(dto.ErrorMessage);
     }
 }

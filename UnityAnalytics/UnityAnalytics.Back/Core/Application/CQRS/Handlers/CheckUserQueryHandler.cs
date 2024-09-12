@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Identity;
 using UnityAnalytics.Back.Core.Application.CQRS.Queries;
 using UnityAnalytics.Back.Core.Application.Dto;
 using UnityAnalytics.Back.Core.Application.Interfaces;
@@ -10,7 +11,7 @@ public class CheckUserQueryHandler : IRequestHandler<CheckUserQueryRequest, Chec
 {
     private readonly IRepository<AppUser> _userRepository;
     private readonly IRepository<AppRole> _roleRepository;
-    private RequestHandler<CheckUserQueryRequest, CheckUserResponseDto> _requestHandlerImplementation;
+  
 
     public CheckUserQueryHandler(IRepository<AppUser> userRepository, IRepository<AppRole> roleRepository)
     {
@@ -18,23 +19,36 @@ public class CheckUserQueryHandler : IRequestHandler<CheckUserQueryRequest, Chec
         _roleRepository = roleRepository;
     }
 
-    public async Task<CheckUserResponseDto>  Handle(CheckUserQueryRequest request,CancellationToken token)
+    public async Task<CheckUserResponseDto> Handle(CheckUserQueryRequest request, CancellationToken token)
     {
         var dto = new CheckUserResponseDto();
-        var user = await _userRepository.GetByFilter(x => x.UserName == request.UserName && x.Password == request.Password);
+        var passwordHasher = new PasswordHasher<AppUser>();
+
+        var user = await _userRepository.GetByFilter(x => x.UserName == request.UserName);
 
         if (user == null)
         {
             dto.IsExist = false;
+            dto.ErrorMessage = "User does not exist";
         }
         else
         {
-            dto.Username = user.UserName;
-            dto.Id = user.Id;
-            dto.IsExist = true;
-            var role = await _roleRepository.GetByFilter(x => x.Id == user.AppRoleId);
-            dto.Role = role?.Definition;
-            
+            var result = passwordHasher.VerifyHashedPassword(user, user.Password, request.Password);
+
+            if (result == PasswordVerificationResult.Success)
+            {
+                dto.Username = user.UserName;
+                dto.Id = user.Id;
+                dto.IsExist = true;
+
+                var role = await _roleRepository.GetByFilter(x => x.Id == user.AppRoleId);
+                dto.Role = role?.Definition;
+            }
+            else
+            {
+                dto.IsExist = false;
+                dto.ErrorMessage = "Invalid password";
+            }
         }
 
         return dto;
