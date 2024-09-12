@@ -8,20 +8,20 @@ namespace UnityAnalytics.Back.Infrastructure;
 
 public class JwtTokenGenerator
 {
-    public static TokenResponseDto GenerateToken(CheckUserResponseDto checkUserResponseDto)
+    public static TokenResponseDto GenerateToken(UserDto userDto)
     {
         var claims = new List<Claim>();
 
-        if (!string.IsNullOrEmpty(checkUserResponseDto.Role))
+        if (!string.IsNullOrEmpty(userDto.Role))
         {
-            claims.Add(new Claim(ClaimTypes.Role, checkUserResponseDto.Role));
+            claims.Add(new Claim(ClaimTypes.Role, userDto.Role));
         }
 
-        claims.Add(new Claim(ClaimTypes.NameIdentifier, checkUserResponseDto.Id.ToString()));
+        claims.Add(new Claim(ClaimTypes.NameIdentifier, userDto.Id.ToString()));
 
-        if (!string.IsNullOrEmpty(checkUserResponseDto.Username))
+        if (!string.IsNullOrEmpty(userDto.Username))
         {
-            claims.Add(new Claim("UserName", checkUserResponseDto.Username));
+            claims.Add(new Claim("UserName", userDto.Username));
         }
 
         var expireDate = DateTime.UtcNow.AddDays(JwtTokenDefaults.Expire);

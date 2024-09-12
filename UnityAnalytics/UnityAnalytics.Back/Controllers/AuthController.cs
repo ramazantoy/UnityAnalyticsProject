@@ -23,7 +23,7 @@ public class AuthController : ControllerBase
        var response= await _mediator.Send(request);
        if (response.IsSuccess)
        {
-           return Created("", response);
+           return Created("",  JwtTokenGenerator.GenerateToken(response));
        }
 
        return BadRequest(response.ErrorMessage);

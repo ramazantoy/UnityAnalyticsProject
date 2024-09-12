@@ -7,7 +7,7 @@ using UnityAnalytics.Back.Core.Domain;
 
 namespace UnityAnalytics.Back.Core.Application.CQRS.Handlers;
 
-public class CheckUserQueryHandler : IRequestHandler<CheckUserQueryRequest, CheckUserResponseDto>
+public class CheckUserQueryHandler : IRequestHandler<CheckUserQueryRequest, CheckUserDto>
 {
     private readonly IRepository<AppUser> _userRepository;
     private readonly IRepository<AppRole> _roleRepository;
@@ -19,9 +19,9 @@ public class CheckUserQueryHandler : IRequestHandler<CheckUserQueryRequest, Chec
         _roleRepository = roleRepository;
     }
 
-    public async Task<CheckUserResponseDto> Handle(CheckUserQueryRequest request, CancellationToken token)
+    public async Task<CheckUserDto> Handle(CheckUserQueryRequest request, CancellationToken token)
     {
-        var dto = new CheckUserResponseDto();
+        var dto = new CheckUserDto();
         var passwordHasher = new PasswordHasher<AppUser>();
 
         var user = await _userRepository.GetByFilter(x => x.UserName == request.UserName);
