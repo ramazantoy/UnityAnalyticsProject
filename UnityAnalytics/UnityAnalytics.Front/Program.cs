@@ -9,10 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews().AddFluentValidation(fv =>
 {
     fv.RegisterValidatorsFromAssemblyContaining<UserSignInModelValidator>();
+    fv.RegisterValidatorsFromAssemblyContaining<UserSignUpModelValidator>();
     fv.DisableDataAnnotationsValidation = true;
 });
 
-builder.Services.AddTransient<IValidator<UserSignInModel>, UserSignInModelValidator>();
 
 builder.Services.AddHttpClient();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddCookie(JwtBearerDefaults.AuthenticationScheme,
